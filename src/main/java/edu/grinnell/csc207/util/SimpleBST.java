@@ -9,8 +9,7 @@ import java.util.function.BiConsumer;
 /**
  * A simple implementation of binary search trees.
  *
- * @author Your Name Here
- * @author Your Name Here
+ * @author Tiffany
  * @author Samuel A. Rebelsky
  *
  * @param <K>
@@ -75,6 +74,34 @@ public class SimpleBST<K, V> implements SimpleMap<K, V> {
   // +-------------------+
 
   /**
+   * A helper function for setting value assoicated with the key in the tree.
+   * @param node
+   *   The node to use.
+   * @param key 
+   *   The key to set value to.
+   * @param value
+   *   The associated value.
+   * @return return the node where the key is at
+   */
+   public Node insert(Node node, K key, V value) {
+    if (node.equals(null)) {
+      return new Node(key,value);
+    }
+    else if (key < node.key) {
+      node.left = insert(node.left, key, value);
+    }
+      
+    else if (key > node.key) {
+      node.left = insert(node.right, key, value);
+    }
+    else {
+      cachedValue = node.value;
+      node.value = value;
+    }
+      
+   } //insert
+
+  /**
    * Set the value associated with key.
    *
    * @param key
@@ -89,7 +116,8 @@ public class SimpleBST<K, V> implements SimpleMap<K, V> {
    */
   @Override
   public V set(K key, V value) {
-    return null;        // STUB
+    insert(this.root, key, value);
+    return cachedValue;
   } // set(K, V)
 
   /**
